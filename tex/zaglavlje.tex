@@ -1,0 +1,56 @@
+% Templejt .tex fajl nesebicno dao na koriscenje Nikola Milosavljevic
+% Ovom prilikom mu se zahvaljujem!
+
+\RequirePackage[hyphens]{url}
+
+\documentclass[a4paper,12pt]{article}
+\usepackage[british]{babel}
+\usepackage[]{verbatim}
+\usepackage{graphicx}
+\usepackage{latexsym}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[hyphens]{url}
+\usepackage[superscript]{cite}
+\usepackage{parskip}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\newcommand{\razmak}{\vspace{0.2cm}}
+
+% Floor i ceil
+\providecommand{\ceil}[1]{\left \lceil #1 \right \rceil }
+\providecommand{\floor}[1]{\left \lfloor #1 \right \rfloor }
+
+% Brojanje jednacina
+\numberwithin{equation}{subsection}
+
+\newtheorem{dfn}{Definicija}[section]
+\newtheorem{thm}[dfn]{Teorema}
+\newtheorem{lm}[dfn]{Lema}
+\newtheorem{pos}[dfn]{Posledica}
+\newtheorem{prim}{Primer}
+
+% Za oblik pasusa
+\parskip 1em
+\parindent 2em
+
+% Za kod
+\lstdefinestyle{customcpp}{
+  belowcaptionskip=1\baselineskip,
+  breaklines=true,
+ %  frame=tbL,
+  frame=single,
+  tabsize=2,
+  numbers=left,
+  % xleftmargin=\parindent,
+  language=C++,
+  showstringspaces=false,
+  basicstyle=\footnotesize\ttfamily,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  identifierstyle=\color{black},
+  stringstyle=\color{orange},
+}

@@ -1,0 +1,23 @@
+\input{zaglavlje.tex}
+\begin{document}
+
+\renewcommand{\abstractname}{Apstrakt}
+\renewcommand{\refname}{Reference}
+\renewcommand{\contentsname}{Sadr\v zaj}
+
+\newcommand{\sirsection}{\section}
+\newcommand{\sirsubsection}{\subsection}
+\newcommand{\sirsubsubsection}{\subsubsection}
+
+\input{sir_prva_strana.tex}
+
+\thispagestyle{headings}
+\tableofcontents
+\newpage
+
+\pagestyle{headings}
+\input{sir_uvod.tex}
+\input{sir_hld.tex}
+\input{sir_dodatak.tex}
+\input{sir_reference.tex}
+\end{document}

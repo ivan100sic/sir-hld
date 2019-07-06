@@ -1,0 +1,108 @@
+\section{Uvod}
+
+Heavy-light dekompozicija je tehnika koja se primenjuje na stabla kako bi se ubrzale operacije koje se odnose na puteve u tom stablu. Ideja je da se stablo particioni\v se na puteve tako da budu zadovoljeni odre\dj eni kriterijumi.
+
+\subsection{Uvodne definicije}
+
+% Treba definisati graf, stablo, put, predak/potomak i sli\v cne pojmove.
+
+Pre nego \v sto defini\v semo Heavy-light dekompoziciju, defini\v simo neophodne osnovne pojmove iz teorije grafova.
+
+\begin{dfn}
+Graf je ure\dj eni par $(V,E)$, gde je $V$ skup \v cvorova grafa, a $E$ je skup grana.
+\end{dfn}
+
+U praksi, posebno kod implementacija grafovskih algoritama za skup $V$ se uzima $\{0, 1, \ldots, n-1\}$ za neki nenegativan ceo broj $n$. U zavisnosti od vrste grafa, skup $E$ mo\v ze sadr\v zati razli\v cite vrste elemenata.
+
+\begin{dfn}
+Kod usmerenog grafa, skupa grana $E$ je podskup skupa \newline $\{(x,y) | x,y \in V, x\not = y\}$.
+\end{dfn}
+
+Ako je $(x,y)$ grana usmerenog grafa ka\v zemo da je grana polazi iz \v cvora $x$ i zavr\v sava se u \v cvoru $y$.
+
+\begin{dfn}
+Kod neusmerenog grafa, skupa grana $E$ je podskup skupa $\binom V2 = \{\{x,y\} | x,y \in V, x \not = y\}$.
+\end{dfn}
+
+Kod neusmerenog grafa ka\v zemo da grana $\{x,y\}$ povezuje \v cvorove $x,y$. Svakom \v cvoru grafa mo\v zemo pridru\v ziti nenegativan ceo broj -- njegov stepen, odnosno broj grana koje sadr\v ze taj \v cvor. Kod usmerenih grafova se defini\v su i ulazni i izlazni stepen -- broj grana koje se zavr\v savaju i broj grana koje po\v cinju nekim \v cvorom, redom. List je \v cvor stepena $1$.
+
+\begin{dfn}
+\v Setnja u grafu $G=(V,E)$ je niz \v cvorova $v_1, v_2, \ldots, v_k \in V$ takav da za svaka dva uzastopna \v cvora $v_i, v_{i+1}$ va\v zi da je $(v_i, v_{i+1}) \in E$ kod usmerenog grafa, odnosno $\{v_i, v_{i+1}\} \in E$ kod neusmerenog grafa.
+\end{dfn}
+
+Du\v zinu \v setnje \' cemo definisati kao broj \v cvorova u njoj umanjen za jedan, odnosno, kao broj grana.
+
+\begin{dfn}
+Put je \v setnja kod koje su svi \v cvorovi razli\v citi.
+\end{dfn}
+
+\begin{dfn}
+\v Cvor $y$ je dosti\v zan iz \v cvora $x$ ukoliko postoji \v setnja koja po\v cinje \v cvorom $x$ a zavr\v sava se \v cvorom $y$.
+\end{dfn}
+
+Nije te\v sko pokazati da je ova definicija ekvivalentna onoj gde se zahteva da postoji put, a ne \v setnja, koji po\v cinje u \v cvoru $x$ a zavr\v sava se u \v cvoru $y$. Kod neusmerenih grafova, jasno je da ako je \v cvor $y$ dosti\v zan iz $x$ da je tada i \v cvor $x$ dosti\v zan iz $y$. Tada ka\v zemo i da su \v cvorovi povezani. 
+
+\begin{thm}
+Relacija povezanosti kod neusmerenog grafa je relacija ekvivalencije. \hfill $\square$
+\end{thm}
+
+\begin{dfn}
+Neusmeren graf je povezan ako je svaki \v cvor dosti\v zan iz svakog drugog \v cvora.
+\end{dfn}
+
+\begin{dfn}
+Prost ciklus u neusmerenom grafu je \v setnja du\v zine bar $3$ kod koje su prvi i poslednji \v cvor jednaki, dok su svi ostali \v cvorovi me\dj usobno razli\v citi i razli\v citi od prvog \v cvora.
+\end{dfn}
+
+Razlog za\v sto se u ovoj definiciji zadaje uslov da \v setnja mora biti du\v zine bar $3$ jeste taj \v sto se \v setnja du\v zine $2$ oblika $u, v, u$ za $u\not = v$ ne smatra prostim ciklusom. Ekvivalentna definicija bi bila da se umesto du\v zine $3$ zahteva da sve iskori\v s\' cene grane budu me\dj usobno razli\v cite.
+
+Prethodna definicija nam omogu\' cava da uvedemo pojam stabla.
+
+\begin{dfn}
+Stablo je povezan neusmeren graf bez prostih ciklusa.
+\end{dfn}
+
+Postoji jo\v s nekoliko ekvivalentnih definicija stabla.
+
+\begin{thm}
+Svaki povezan neusmeren graf sa $n$ \v cvorova i $n-1$ granom je stablo. \hfill $\square$
+\end{thm}
+
+\begin{thm}
+Svaki neusmeren graf takav da izme\dj u svaka dva \v cvora postoji jedinstven put je stablo. \hfill $\square$
+\end{thm}
+
+Da bismo definisali hijerarhiju \v cvorova u stablu, potrebno je da izaberemo jedan \v cvor, koji \' cemo zvati korenom stabla. \v Cesto se izbor korena prirodno name\' ce -- na primer, ukoliko se radi o sintaksnom stablu neke re\v cenice, koren \' ce biti \v cvor koji predstavlja celu tu re\v cenicu. Ukoliko to nije slu\v caj, jedan \v cvor se proizvoljno bira za koren. Sada mo\v zemo definisati pojmove roditelja, dece, predaka, potomaka i podstabala u stablu.
+
+\begin{dfn}
+U stablu $T=(V,E)$ sa korenom $r$ roditelj \v cvora $x \not = r$ je drugi \v cvor na jedinstvenom putu od $x$ do $r$. Za $x=r$ roditelj se ne defini\v se. Deca \v cvora $x$ su \v cvorovi kojima je $x$ roditelj.
+\end{dfn}
+
+\begin{dfn}
+Preci \v cvora $x$ su svi \v cvorovi na putu od $x$ do $r$. Potomci \v cvora $x$ su svi \v cvorovi kojima je on predak.
+\end{dfn}
+
+\begin{dfn}
+Podstablo \v cvora $x$ je indukovani podgraf nad skupom potomaka $x$. Sa $s(x)$ ozna\v cavamo broj \v cvorova, odnosno veli\v cinu podstabla \v cvora $x$.
+\end{dfn}
+
+\begin{dfn}
+Dubina \v cvora $x$, u oznaci $d(x)$, je du\v zina puta od $x$ do $r$.
+\end{dfn}
+
+\subsection{Slo\v zenost algoritama}
+
+Vreme, odnosno broj koraka i koli\v cina utro\v sene memorije tokom izvr\v senja nekog algoritma zavisi od ulaznih parametara. \textit{Veliko O} notacija nam olak\v sava opisivanje i izra\v cunavanje ovih funkcionalnih zavisnosti. Neka je u narednim definicijama domen funkcija $f, g$ skup $\mathbb{N}_0$ a kodomen $\mathbb{R}^{+} \cup \{ 0 \}$.
+
+\begin{dfn}
+Skup $O(g)$ defini\v semo kao skup svih funkcija $f$ za koje va\v zi da postoje konstante $c$ i $n_0$ takve da je $f(n) \leq c g(n)$ za svako $n \geq n_0$.
+\end{dfn}
+
+Ovu notaciju koristimo kada \v zelimo da opi\v semo gornju granicu neke funkcije, do na proizvod sa konstantom. \v Cesto umesto $f \in O(g)$ pi\v semo i $f = O(g)$. Problem ove notacije je upravo u tome \v sto samo daje gornju granicu pona\v sanja neke funkcije. Zato se uvodi $\Theta$-notacija.
+
+\begin{dfn}
+Skup $\Theta(g)$ defini\v semo kao skup svih funkcija $f$ za koje va\v zi da postoje pozitivne konstante $c_1, c_2$ i $n_0$ takve da je $c_1 g(n) \leq f(n) \leq c_2 g(n)$ za svako $n \geq n_0$.
+\end{dfn}
+
+Za algoritam \v ciji je ulazni parametar $n$, \v sto mo\v ze biti broj elemenata niza, broj vrsta matrice, broj \v cvorova grafa, itd. ka\v zemo da ima vremensku slo\v zenost $\Theta(g(n))$ ako je $f$, gde je $f(n)$ broj elementarnih koraka tokom izvr\v senja algoritma, u skupu $\Theta(g)$. Sli\v cno defini\v semo memorijsku slo\v zenost preko broja iskori\v s\' cenih elementarnih memorijskih lokacija npr. bajtova ili bitova.
+
