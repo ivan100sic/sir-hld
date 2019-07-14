@@ -6,6 +6,12 @@ Neka je $T = (V,E)$ stablo sa korenom $r \in V$. Za svaki \v cvor $x$ koji ima b
 
 Posmatrajmo usmeren graf $H$ \v ciji je skup \v cvorova $V$ a skup grana je $\{(x, h_x) | x \text{ ima decu}\}$. Doka\v zimo da je on jednak uniji puteva. Svaki \v cvor ima ulazni stepen najvi\v se $1$, zato \v sto je jedina grana koja mo\v ze da ide ka njemu ona koja polazi iz njegovog roditelja. Tako\dj e, jasno je da svaki \v cvor po definiciji ima izlazni stepen najvi\v se $1$. Odavde zaklju\v cujemo da se graf mo\v ze razbiti na komponente, gde je svaka ili put ili ciklus. Ovaj graf ne sadr\v zi cikluse jer se du\v z svake \v setnje u grafu dubina \v cvora u stablu $T$ pove\' cava. Ovime smo pokazali da je $H$ razbijanje na puteve. Ovo razbijanje upravo zovemo \textit{Heavy-light dekompozicijom} stabla. U stablu $T$ grane $(x, h_x)$ nazivamo te\v skim, dok sve ostale grane nazivamo lakim granama -- odatle poti\v ce i naziv \textit{Heavy-light dekompozicija}.
 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=80mm]{../img/hld.eps}
+    \caption*{\textit{Primer heavy-light dekompozicije, koren je \v cvor 0. Te\v ske grane su podebljane.}}
+\end{figure}
+
 Ovo razbijanje je od zna\v caja jer zadovoljava slede\' cu veoma va\v znu osobinu.
 
 \begin{thm}
